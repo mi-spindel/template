@@ -2,7 +2,12 @@ version: "3.8"
 
 services:
   core:
-    runtime: nvidia
+    # runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [ gpu ]
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
     build:
@@ -14,6 +19,6 @@ services:
     user: 1000:1000
     tty: true
     volumes:
-        - ../../:/home/challenger/ascender
+      - ../../:/home/challenger/ascender
     ports:
-        - 8000:8000
+      - 8000:8000

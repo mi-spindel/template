@@ -2,7 +2,6 @@ version: "3.8"
 
 services:
   core:
-    # runtime: nvidia
     deploy:
       resources:
         reservations:
@@ -12,13 +11,17 @@ services:
       - NVIDIA_VISIBLE_DEVICES=all
     build:
       args:
-        - BASE_IMAGE=nvidia/cuda:11.0.3-devel-ubuntu20.04
-        - PYTHON_VERSION=3.8
+        - BASE_IMAGE=nvcr.io/nvidia/pytorch:22.04-py3
       context: ../../
       dockerfile: environments/Dockerfile
+    image: "pytorch:22.04"
+    container_name: pytorch
+    shm_size: 16gb
+    restart: always
     user: 1000:1000
     tty: true
     volumes:
       - ../../:/home/challenger/ascender
     ports:
-      - 8000:8000
+      - 8888:6060
+      - 6006:6006
